@@ -1,10 +1,29 @@
 import "./App.css";
+import axios from 'axios';
+import React, { useEffect } from 'react';
+import { Hero } from '../components/hero';
+
+
 
 function App() {
+	const handleSubmit = async (event) => {
+        event.preventDefault();
+        const name = event.target.elements.name.value;
+        const message = event.target.elements.message.value;
+        const response = await axios.post('/api/quote', { name, message });
+        // handle response here
+    };
+	useEffect(() => {
+        const fetchData = async () => {
+            const response = await axios.get('/api/quote');
+            console.log(response.data);
+        };
+        fetchData();
+    }, []);
 	return (
 		<div className="App">
 			{/* TODO: include an icon for the quote book */}
-			<h1>Hack at UCI Tech Deliverable</h1>
+			<Hero></Hero>
 
 			<h2>Submit a quote</h2>
 			{/* TODO: implement custom form submission logic to not refresh the page */}
